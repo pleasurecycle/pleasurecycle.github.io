@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Anna Eisenhour</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<!--   <meta property="og:description" content="Ercan–Li is the design practice of Nazlı Ercan and Eric Li" />
+  <meta property="og:image" content="https://ercan-li.com/icons/social.jpg" />
+  <link rel="icon" href="./icons/favicon.png" sizes="any">
+  <link rel="icon" href="./icons/favicon.svg" type="image/svg+xml"> -->
+
+  <style>
+    body, html {
+      padding: 0;
+      margin: 12px;
+    }
+
+    h1, p {
+        position: fixed;
+        font-weight: normal;
+        font-family: Walbaum;
+        font-size: 1em;
+        color: blue;
+        text-decoration: underline;
+        margin: 0;
+        line-height: 1.5em;
+        background: white;
+        bottom: 5vh;
+    }
+
+    .social-media {
+      margin-top: 1em;
+    }
+
+    a {
+      color: blue;
+    }
+
+    a:visited {
+      color: purple;
+    }
+
+    a:hover {
+      color: red;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    ul li {
+         display: inline;
+         /* margin: 10px; */
+    }
+
+
+    .hero {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      width: 6400px;
+      /* width: auto; */
+      height: 80vh;
+      top: 85px;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      /* align-items: center;
+      justify-content: center; */
+      overflow: auto;
+        white-space: nowrap;
+      /* background: black; */
+      /* pointer-events: none; */
+    }
+
+    /* .hero__container {
+      /* position: relative; 
+    } */
+
+    .hero__container li {
+        pointer-events: all;
+        display: none;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+        white-space: nowrap;
+    }
+
+    .hero__container li.active {
+      display: block;
+    }
+
+    .hero__container li a {
+      display: block;
+    }
+
+    img {
+      display: block;
+      height: 450px;
+      width: auto;
+      margin-right: 100px;
+      /* filter: brightness(115%) grayscale(100%) contrast(5000%) ; */
+    }
+
+    @media screen and (max-width: 800px) {
+        img {
+            max-height: 250px;
+            width: auto;
+        }
+
+        .hero {
+            width: 4040px;
+            height: 250px;
+        }
+
+    }
+    
+    /* .hero__container:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      /* mix-blend-mode: lighten;
+      background-color: var(--background, #dd6203);
+      transition: background 4s linear; 
+    } */
+
+  </style>
+  
+</head>
+<body>
+  <div class="hero">
+    <ul class="hero__container" data-active-idx="0" data-active-color-idx="0"></ul>
+  </div>
+
+  <template id="image-block">
+    <li>
+      <a href="/">
+        <img src="" alt="" />
+      </a>
+    </li>
+  </template>
+
+  <p>
+    <a href="about.html">About</a>
+    <br><a href="contact.html">Contact</a>
+    <br><a href="https://www.instagram.com/perverse__dream/" target="_blank" rel="noopener noreferrer">Instagram</a>
+  </p>
+  
+  <script>
+    const colors = ['#dd6203', '#6aab00', '#224fc7'];
+    window.addEventListener('DOMContentLoaded', () => {
+    //   const channel = 'image-sequence';
+
+      fetch(`https://api.are.na/v2/channels/anna-eisenhour-ovfvtboppzw?per=100`, {cache: 'no-store'})
+        .then(response => response.json())
+        .then(data => {
+          renderBlocks(data.contents);
+          runImages();
+        //   runColors();
+        });
+      
+      const renderBlocks = (blocks) => {
+        blocks.forEach((block, index) => {
+          if (block.image && block.image.large.url) {
+            let tmpl = document.getElementById('image-block');
+            let clone = tmpl.content.cloneNode(true);
+            if (index == 0) {
+              clone.querySelector('li').classList.add('active');
+            }
+            clone.querySelector('img').src = block.image.large.url;
+            clone.querySelector('img').alt = block['generated_title'];
+
+            document.querySelector('ul').appendChild(clone);
+          }
+        });
+      };
+
+      const runImages = () => {
+        const heroImgContainer = document.querySelector('ul');
+        return setInterval(() => {
+          let heroImgs = heroImgContainer.querySelectorAll('li');
+          let activeIdx = parseInt(heroImgContainer.dataset.activeIdx);
+        //   heroImgs[activeIdx].classList.remove('active');
+        activeIdx = (activeIdx + 1) % heroImgs.length;
+          heroImgs[activeIdx].classList.add('active');
+          heroImgContainer.dataset.activeIdx = activeIdx;
+        }, 0.0001);
+      };
+
+      const runColors = () => {
+        runColor();
+        return setInterval(runColor, 1000 * 7);
+      }
+
+      const runColor = () => {
+        const heroImgContainer = document.querySelector('ul');
+        let activeColorIdx = parseInt(heroImgContainer.dataset.activeColorIdx);
+        heroImgContainer.style.setProperty('--background', colors[activeColorIdx]);
+        activeColorIdx = (activeColorIdx + 1) % colors.length;
+        heroImgContainer.dataset.activeColorIdx = activeColorIdx;
+      };
+    });
+  </script>
+</body>
+<html>
