@@ -24,7 +24,7 @@
         text-decoration: underline;
         margin: 0;
         line-height: 1.5em;
-        background: white;
+        /* background: white; */
         bottom: 5vh;
     }
 
@@ -58,25 +58,20 @@
          /* margin: 10px; */
     }
 
+    /* #parent {
+      margin: auto;
+      text-align: center;
+    } */
 
     .hero {
       position: relative;
-      margin: 0;
       padding: 0;
-      width: 6400px;
-      /* width: auto; */
-      height: 80vh;
-      top: 85px;
-      left: 0;
-      bottom: 0;
-      right: 0;
+      /* width: 80%; */
+      margin: auto;
+      height: 1000px;
       display: flex;
-      /* align-items: center;
-      justify-content: center; */
-      overflow: auto;
-        white-space: nowrap;
-      /* background: black; */
-      /* pointer-events: none; */
+      align-items: center;
+      justify-content: center;
     }
 
     /* .hero__container {
@@ -100,11 +95,18 @@
       display: block;
     }
 
+    #image-block {
+      margin: auto;
+      justify-content: center;
+    }
+
     img {
-      display: block;
-      height: 450px;
+      /* display: flex; */
+      height: 700px;
       width: auto;
-      margin-right: 100px;
+      top: 25px;
+      left: 25px;
+      position: fixed;
       /* filter: brightness(115%) grayscale(100%) contrast(5000%) ; */
     }
 
@@ -112,11 +114,6 @@
         img {
             max-height: 250px;
             width: auto;
-        }
-
-        .hero {
-            width: 4040px;
-            height: 250px;
         }
 
     }
@@ -138,9 +135,12 @@
   
 </head>
 <body>
-  <div class="hero">
-    <ul class="hero__container" data-active-idx="0" data-active-color-idx="0"></ul>
+  <div id="parent">
+    <div class="hero">
+      <ul class="hero__container" data-active-idx="0" data-active-color-idx="0"></ul>
+    </div>
   </div>
+  
 
   <template id="image-block">
     <li>
@@ -153,7 +153,6 @@
   <p>
     <a href="about.html">About</a>
     <br><a href="contact.html">Contact</a>
-    <br><a href="https://www.instagram.com/perverse__dream/" target="_blank" rel="noopener noreferrer">Instagram</a>
   </p>
   
   <script>
@@ -166,19 +165,86 @@
         .then(data => {
           renderBlocks(data.contents);
           runImages();
-        //   runColors();
+          // runColors();
         });
+
+        
       
       const renderBlocks = (blocks) => {
         blocks.forEach((block, index) => {
           if (block.image && block.image.large.url) {
             let tmpl = document.getElementById('image-block');
             let clone = tmpl.content.cloneNode(true);
+            let top = '0px';
+            let left = '0px';
             if (index == 0) {
               clone.querySelector('li').classList.add('active');
+              clone.querySelector('img').style.left = '20px';
+              clone.querySelector('img').style.top = '20px';
+            } else if (index==1){
+              clone.querySelector('img').style.left = '5%';
+              clone.querySelector('img').style.top = '10%';
+            } else if (index==2){
+              clone.querySelector('img').style.left = '0%';
+              clone.querySelector('img').style.top = '20%';
+            } else if (index==3){
+              clone.querySelector('img').style.left = '20%';
+              clone.querySelector('img').style.top = '10%';
+            } else if (index==4){
+              clone.querySelector('img').style.left = '30%';
+              clone.querySelector('img').style.top = '5%';
+            } else if (index==5){
+              clone.querySelector('img').style.left = '40%';
+              clone.querySelector('img').style.top = '20%';
+            } else if (index==6){
+              clone.querySelector('img').style.left = '30%';
+              clone.querySelector('img').style.top = '0%';
+            } else if (index==7){
+              clone.querySelector('img').style.left = '0%';
+              clone.querySelector('img').style.top = '20%';
+            } else if (index==8){
+              clone.querySelector('img').style.left = '20%';
+              clone.querySelector('img').style.top = '20%';
+            } else if (index==9){
+              clone.querySelector('img').style.left = '15%';
+              clone.querySelector('img').style.top = '15%';
+            } else if (index==10){
+              clone.querySelector('img').style.left = '30%';
+              clone.querySelector('img').style.top = '5%';
+            } else if (index==11){
+              clone.querySelector('img').style.left = '5%';
+              clone.querySelector('img').style.top = '10%';
+            } else if (index==12){
+              clone.querySelector('img').style.left = '10%';
+              clone.querySelector('img').style.top = '20%';
+            } else if (index==13){
+              clone.querySelector('img').style.left = '20%';
+              clone.querySelector('img').style.top = '10%';
+            } else if (index==14){
+              clone.querySelector('img').style.left = '40%';
+              clone.querySelector('img').style.top = '5%';
+            } else if (index==15){
+              clone.querySelector('img').style.left = '30%';
+              clone.querySelector('img').style.top = '20%';
             }
+
+            // for (let i = 0; i < index.length; i++) {
+
+
+            //   top = Math.floor(Math.random() * 71);
+            //   left = Math.floor(Math.random() * 71);
+
+            //   clone.querySelector('img').style.top = top + '%';
+            //   clone.querySelector('img').style.left = left + '%';
+              
+            // }
+
+            
+
             clone.querySelector('img').src = block.image.large.url;
             clone.querySelector('img').alt = block['generated_title'];
+
+            
 
             document.querySelector('ul').appendChild(clone);
           }
@@ -187,14 +253,35 @@
 
       const runImages = () => {
         const heroImgContainer = document.querySelector('ul');
+        
         return setInterval(() => {
           let heroImgs = heroImgContainer.querySelectorAll('li');
           let activeIdx = parseInt(heroImgContainer.dataset.activeIdx);
-        //   heroImgs[activeIdx].classList.remove('active');
-        activeIdx = (activeIdx + 1) % heroImgs.length;
-          heroImgs[activeIdx].classList.add('active');
-          heroImgContainer.dataset.activeIdx = activeIdx;
-        }, 0.0001);
+          // var scroll = window.scrollY + (window.innerHeight / heroImgs.length)
+          // console.log(scroll)
+          // console.log('hello')
+          
+
+          window.onscroll = function() { 
+            // const pic = document.querySelector('img');
+            const pic = document.getElementById('parent');
+
+
+            heroImgs[activeIdx].classList.remove('active');
+            activeIdx = (activeIdx + 1) % heroImgs.length;
+            heroImgs[activeIdx].classList.add('active');
+            heroImgContainer.dataset.activeIdx = activeIdx;
+
+
+            //  heroImgContainer.dataset.activeIdx.style.left = "500px";
+            // pic.style.setProperty('left', '20px');
+
+            
+            // pic.style.left = '200px';
+            // pic.style.top = '100px';
+
+          }
+        }, 0.00001);
       };
 
       const runColors = () => {
