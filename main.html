@@ -197,21 +197,33 @@
             let left = '0px';
             if (index == 0) {
               clone.querySelector('li').classList.add('active');
-              clone.querySelector('img').style.left = '40%';
+              // clone.querySelector('img').style.left = '40%';
               // clone.querySelector('img').style.top = '20px';
 
               if (window.screen.width < 800) {
+                clone.querySelector('img').style.left = '10%';
                 clone.querySelector('img').style.top = '40%';
               } else {
+                clone.querySelector('img').style.left = '40%';
                 clone.querySelector('img').style.top = '20px';
               }
                 
             } else if (index==1){
-              clone.querySelector('img').style.left = '5%';
-              clone.querySelector('img').style.top = '10%';
+              if (window.screen.width < 800) {
+                clone.querySelector('img').style.left = '10%';
+                clone.querySelector('img').style.top = '60%';
+              } else {
+                clone.querySelector('img').style.left = '5%';
+                clone.querySelector('img').style.top = '10%';
+              }
             } else if (index==2){
-              clone.querySelector('img').style.left = '0%';
-              clone.querySelector('img').style.top = '20%';
+              if (window.screen.width < 800) {
+                clone.querySelector('img').style.left = '5%';
+                clone.querySelector('img').style.top = '70%';
+              } else {
+                clone.querySelector('img').style.left = '0%';
+                clone.querySelector('img').style.top = '20%';
+              }
             } else if (index==3){
               clone.querySelector('img').style.left = '20%';
               clone.querySelector('img').style.top = '10%';
