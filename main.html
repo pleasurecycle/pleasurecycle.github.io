@@ -198,7 +198,12 @@
             if (index == 0) {
               clone.querySelector('li').classList.add('active');
               clone.querySelector('img').style.left = '40%';
-              clone.querySelector('img').style.top = '30%';
+              clone.querySelector('img').style.top = '20px';
+
+              if (window.screen.width <= 800) {
+                clone.querySelector('img').style.top = '40%';
+              }
+                
             } else if (index==1){
               clone.querySelector('img').style.left = '5%';
               clone.querySelector('img').style.top = '10%';
